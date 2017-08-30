@@ -35,6 +35,9 @@ public class Client {
 	@Pattern(regexp="[0-9]{3}-[0-9]{2}-[0-9]{2}", message="wrong input")
 	private String telephone;
 	
+//	@Column(name = "doctor")
+//	private String doctor;
+	
 	public Client() {
 		
 	}
@@ -43,6 +46,7 @@ public class Client {
 		this.name = name;
 		this.surname = surname;
 		this.telephone = telephone;
+		//this.doctor = doctor;
 	}
 
 	public int getId() {
@@ -76,6 +80,16 @@ public class Client {
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
+
+//	public String getDoctor() {
+//		return doctor;
+//	}
+//
+//	public void setDoctor(String doctor) {
+//		this.doctor = doctor;
+//	}
+	
+	
 	
 }
 

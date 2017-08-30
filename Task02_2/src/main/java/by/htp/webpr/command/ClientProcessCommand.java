@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import by.htp.webpr.domain.Client;
+import by.htp.webpr.domain.Doctor;
+import by.htp.webpr.domain.Messages;
 
 @Controller
 @RequestMapping("/client")
@@ -31,18 +33,34 @@ public class ClientProcessCommand {
 	}
 
 	@RequestMapping("/showRegistrationForm")
-	public String showForm(Model theModel) {
+	public String showForm(@ModelAttribute("doctor") Doctor theDoctor, Model theModel) {
 
 		theModel.addAttribute("client", new Client());
-
+		
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Doctor.class)
+				.buildSessionFactory();
+		
+		Session session = factory.openSession();
+		
+		try {
+			session.beginTransaction();
+			List<Doctor> result = session.createQuery("SELECT name FROM Doctor").list();
+		     
+			session.getTransaction().commit();
+		     
+		    theModel.addAttribute("doctors", result);
+		} finally {
+			factory.close();
+		}
+		
 		return "registration-form";
 	}
 
 	@RequestMapping("/processRegistrationForm")
-	public String processForm(@Valid @ModelAttribute("client") Client theClient, BindingResult theBindingResult) {
+	public String processForm(@Valid @ModelAttribute("client") Client theClient, BindingResult theBindingResult, Model theModel) {
 		
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class)
-				.buildSessionFactory();
+				.addAnnotatedClass(Doctor.class).buildSessionFactory();
 		Session session = factory.getCurrentSession();
 
 		try {
@@ -50,26 +68,31 @@ public class ClientProcessCommand {
 
 			session.beginTransaction();
 
-			System.out.println("Saving the client " + theClient.getName() + " " + theClient.getSurname() + " " + theClient.getTelephone());
+			System.out.println("Saving the client " + theClient.getName() + " " + theClient.getSurname() + " " + theClient.getTelephone() + " " );
+
+			if (theBindingResult.hasErrors()) {
+				return "registration-form";
+			}
+			
 			session.save(client);
-
 			session.getTransaction().commit();
-
-			System.out.println("Done!");
+			
+			showListOfClientsPage(theClient, theBindingResult,theModel);
+			
+			Messages.message = "Client was successfully added";
+			Messages.result = "success";
+			
 		} finally {
 			factory.close();
 		}
-
-		if (theBindingResult.hasErrors()) {
-			return "registration-form";
-		} else {
-			return "clients-list-page";
-		}
+		
+		return "clients-list-page";
+		
 	}
 	
 	@RequestMapping("/showClientsListPage")
 	public String showListOfClientsPage(@Valid @ModelAttribute("client") Client theClient, BindingResult theBindingResult, Model theModel) {
-		
+				
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class)
 				.buildSessionFactory();
 		
@@ -80,20 +103,18 @@ public class ClientProcessCommand {
 			List<Client> result = session.createQuery("FROM Client").list();
 		     
 			session.getTransaction().commit();
-
-		    System.out.println("-----" + result.get(0).getName());
 		     
 		    theModel.addAttribute("clients", result);
-		
+		    		
+		    Messages.message = "";
 		} finally {
 			factory.close();
 		}
-		
 		return "clients-list-page";
 	}
 	
 	@RequestMapping("/update")
-	public String update(@Valid @ModelAttribute("client") Client newClient, BindingResult theBindingResult) {
+	public String update(@Valid @ModelAttribute("client") Client newClient, BindingResult theBindingResult, Model theModel) {
 		
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class)
 				.buildSessionFactory();
@@ -119,15 +140,23 @@ public class ClientProcessCommand {
 			query.executeUpdate();
 			
 			session.getTransaction().commit();
-		}
-		finally {
+			
+			showListOfClientsPage(newClient, theBindingResult,theModel); 
+			
+			Messages.message = "Client was successfully edited";
+			Messages.result = "success";
+		}catch(Exception e){
+			Messages.message = e.getMessage();
+			Messages.result = "danger";
+		}finally {
 			factory.close();
 		}
+		
 		return "clients-list-page"; 
 	}
 	
 	@RequestMapping("/delete")
-	public String delete(@Valid @ModelAttribute("client") Client theClient, BindingResult theBindingResult) {
+	public String delete(@Valid @ModelAttribute("client") Client theClient, BindingResult theBindingResult, Model theModel) {
 		
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class)
 				.buildSessionFactory();
@@ -149,8 +178,15 @@ public class ClientProcessCommand {
 			query.executeUpdate();
 			
 			session.getTransaction().commit();
-		}
-		finally {
+			
+			showListOfClientsPage(theClient, theBindingResult, theModel); 
+			
+			Messages.message = "Client was successfully removed";
+			Messages.result = "success";
+		}catch(Exception e){
+			Messages.message = e.getMessage();
+			Messages.result = "danger";
+		}finally {
 			factory.close();
 		}
 		return "clients-list-page"; 

@@ -24,14 +24,9 @@
 			<form:errors path="telephone" cssClass="error" />
 		</div>
 	</div>
-	<div class="row">
-	    <div class="col-md-4 col-md-offset-3">
-	  	    <label>Prefered doctor</label>
-	  	    <select id="doctor" name="doctor" class="form-control">
-	  		
-	  	    </select>
-	  </div>
-	</div>
+	
+	<!--form:select path="doctor" items="${doctors}"/-->
+
 	<button type="submit" class="btn btn-primary">Submit</button>
 </form:form>
 <%@ include file="include/end-html.jsp" %>
