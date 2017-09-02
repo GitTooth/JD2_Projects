@@ -33,18 +33,18 @@ public class ClientProcessCommand {
 	}
 
 	@RequestMapping("/showRegistrationForm")
-	public String showForm(@ModelAttribute("doctor") Doctor theDoctor, Model theModel) {
+	public String showForm(Model theModel) {
 
 		theModel.addAttribute("client", new Client());
 		
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Doctor.class)
+		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class).addAnnotatedClass(Doctor.class)
 				.buildSessionFactory();
 		
 		Session session = factory.openSession();
 		
 		try {
 			session.beginTransaction();
-			List<Doctor> result = session.createQuery("SELECT name FROM Doctor").list();
+			List<String> result = session.createQuery("SELECT name FROM Doctor").list();
 		     
 			session.getTransaction().commit();
 		     
@@ -64,17 +64,26 @@ public class ClientProcessCommand {
 		Session session = factory.getCurrentSession();
 
 		try {
-			Client client = new Client(theClient.getName(), theClient.getSurname(), theClient.getTelephone());
-
+			
 			session.beginTransaction();
+			
+			Doctor doctor = (Doctor)session.createQuery("FROM Doctor WHERE name = '" + theClient.getDoctor().getName() + "'").list().get(0);
+			session.getTransaction().commit();
+			System.out.println(doctor.getName() + " " + doctor.getId());
+			
+			session = factory.openSession();
+			session.beginTransaction();
+			Client client = new Client(theClient.getName(), theClient.getSurname(), theClient.getTelephone(), doctor);
 
-			System.out.println("Saving the client " + theClient.getName() + " " + theClient.getSurname() + " " + theClient.getTelephone() + " " );
+			System.out.println("Saving the client " + theClient.getName() + " " + theClient.getSurname() + " " + theClient.getTelephone() + " " + theClient.getDoctor().getName());
 
 			if (theBindingResult.hasErrors()) {
 				return "registration-form";
 			}
-			
+
 			session.save(client);
+			
+			System.out.println("saved");
 			session.getTransaction().commit();
 			
 			showListOfClientsPage(theClient, theBindingResult,theModel);
@@ -94,7 +103,7 @@ public class ClientProcessCommand {
 	public String showListOfClientsPage(@Valid @ModelAttribute("client") Client theClient, BindingResult theBindingResult, Model theModel) {
 				
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class)
-				.buildSessionFactory();
+				.addAnnotatedClass(Doctor.class).buildSessionFactory();
 		
 		Session session = factory.openSession();
 		
@@ -105,6 +114,13 @@ public class ClientProcessCommand {
 			session.getTransaction().commit();
 		     
 		    theModel.addAttribute("clients", result);
+		    
+		    session.beginTransaction();
+			List<String> doctors = session.createQuery("SELECT name FROM Doctor").list();
+		     
+			session.getTransaction().commit();
+		     
+		    theModel.addAttribute("doctors", doctors);
 		    		
 		    Messages.message = "";
 		} finally {
@@ -117,7 +133,7 @@ public class ClientProcessCommand {
 	public String update(@Valid @ModelAttribute("client") Client newClient, BindingResult theBindingResult, Model theModel) {
 		
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class)
-				.buildSessionFactory();
+				.addAnnotatedClass(Doctor.class).buildSessionFactory();
 		
 		Session session = factory.openSession();
 		
@@ -125,28 +141,31 @@ public class ClientProcessCommand {
 			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
-			Query query = session.createQuery("UPDATE Client set "
-					+ "name = :name, "
-					+ "surname = :surname, "
-					+ "telephone = :telephone "
-					+ "WHERE id = :id"
-				);
+			Doctor doctor = (Doctor)session.createQuery("FROM Doctor WHERE name = '" + newClient.getDoctor().getName() + "'").list().get(0);
 			
-			query.setParameter("name", newClient.getName());
-			query.setParameter("surname", newClient.getSurname());
-			query.setParameter("telephone", newClient.getTelephone());
-			query.setParameter("id", newClient.getId());
-			
-			query.executeUpdate();
-			
+			System.out.println("Doctor: " + newClient.getDoctor().getName());
+						
 			session.getTransaction().commit();
 			
-			showListOfClientsPage(newClient, theBindingResult,theModel); 
+			session = factory.openSession();
+			session.beginTransaction();
+			
+			newClient.setDoctor(doctor);
+			
+			if (theBindingResult.hasErrors()) {
+				showListOfClientsPage(newClient, theBindingResult, theModel);
+			}
+			
+			session.update(newClient);
+						
+			session.getTransaction().commit();
+			
+			showListOfClientsPage(newClient, theBindingResult, theModel); 
 			
 			Messages.message = "Client was successfully edited";
 			Messages.result = "success";
 		}catch(Exception e){
-			Messages.message = e.getMessage();
+			Messages.message = "Failed while trying to edit";
 			Messages.result = "danger";
 		}finally {
 			factory.close();
@@ -159,7 +178,7 @@ public class ClientProcessCommand {
 	public String delete(@Valid @ModelAttribute("client") Client theClient, BindingResult theBindingResult, Model theModel) {
 		
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Client.class)
-				.buildSessionFactory();
+				.addAnnotatedClass(Doctor.class).buildSessionFactory();
 		
 		Session session = factory.openSession();
 		
@@ -167,15 +186,9 @@ public class ClientProcessCommand {
 			session = factory.getCurrentSession();
 			session.beginTransaction();
 			
-			Query query = session.createQuery("DELETE FROM Client "
-					+ "WHERE id = :id"
-				);
-			
+			session.delete(theClient);
+						
 			System.out.println(theClient.getId());
-			
-			query.setParameter("id", theClient.getId());
-			
-			query.executeUpdate();
 			
 			session.getTransaction().commit();
 			
@@ -184,7 +197,7 @@ public class ClientProcessCommand {
 			Messages.message = "Client was successfully removed";
 			Messages.result = "success";
 		}catch(Exception e){
-			Messages.message = e.getMessage();
+			Messages.message = "Failed while trying to remove";
 			Messages.result = "danger";
 		}finally {
 			factory.close();

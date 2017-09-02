@@ -25,7 +25,7 @@
 
 <font size = "4">
 	<div class="row">
-	    <div class=col-md-1>ID</div>
+	    <!--div class=col-md-1>ID</div-->
 	    <div class=col-md-2>Name</div>
 	    <div class=col-md-2>Surname</div>
 	    <div class=col-md-2>Telephone</div>
@@ -36,10 +36,6 @@
 <c:forEach items="${clients}" var="client">
 	    <form:form action="update" commandName="client">
 		    <div class="row">
-		        <div class="col-md-1">
-		            <form:input cssClass="form-control" path="id"
-		                   value="${client.id}"/>
-		        </div>
 		        <div class="col-md-2">
 		            <form:input cssClass="form-control" path="name"
 		                   value="${client.name}"/>
@@ -52,17 +48,33 @@
 		            <form:input cssClass="form-control" path="telephone"
 		                   value="${client.telephone}"/>
 		        </div>
+		        
+		        <!--form:select cssClass="btn btn-primary dropdown-toggle" path="doctor" items="${doctors}"/-->
+		        
+		        <form:select multiple="single" path="doctor" cssClass="btn btn-primary dropdown-toggle">
+   					<form:option value="${client.getDoctor().getName()}" />
+   					<div class="dropdown-divider"></div>
+   					<form:options items="${doctors}"/>
+				</form:select>
+		        
 		        <div class="col-md-2">
 		            <button id="Update" name="Update" class="btn btn-success">
 		                Save
 		            </button>
 		        </div>
+		        
+		        <div class="col-md-1" style="visibility: hidden">
+		            <form:input cssClass="form-control" path="id"
+		                   value="${client.id}"/>
+		        </div>
+		        
 	        </div>
     	</form:form>
     	<form:form action="delete" commandName="client">
 	        <div class="col-md-2">
 	        	<form:hidden cssClass="form-control" path="id" value="${client.id}"/>
-	            <button id="delete" name="delete" class="btn btn-danger">
+	            <button id="delete" name="delete" class="btn btn-danger" data-toggle="tooltip" 
+	            	data-placement="right" title="Doesn't want to be on one row :(" onclick="return confirm('Are you sure?')">
 	                Remove
 	            </button>
 	        </div>
