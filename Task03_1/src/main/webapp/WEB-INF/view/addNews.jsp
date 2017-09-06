@@ -37,7 +37,9 @@
 	  		  </div>
  		  </div>
 	  </form:form>
-	  <button>Cancel</button>	  
+	  <form:form action = "cancel">
+	  		<button>Cancel</button>	  
+	  </form:form>
 	  <br/>
       <br/>
       <br/>

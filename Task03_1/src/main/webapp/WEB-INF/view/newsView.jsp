@@ -10,7 +10,7 @@
 		  <br/>
 		  <div class = "leftform">
 		  		News Date
-		  		<c:out value="${news.date.getDay()}/${news.date.getMonth()}/${news.date.getYear()}"/>
+		  		<c:out value="${news.date}"/>
 		  </div>
 		  <br/>
 		  <br/>
@@ -30,7 +30,7 @@
   		  </div>
   		  <div>
 	  		  <div class = "bottomright">
-	  		  <form:form action = "showNews" modelAttribute = "news">
+	  		  <form:form action = "addNewsForm" modelAttribute = "news">
   		  			<form:hidden path="id" value="${news.id}"/>
 	  		  			<button>EDIT</button>
   			  </form:form>

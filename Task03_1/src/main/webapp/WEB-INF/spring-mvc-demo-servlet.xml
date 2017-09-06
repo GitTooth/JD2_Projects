@@ -3,6 +3,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
             http://www.springframework.org/schema/beans     
@@ -12,7 +13,9 @@
             http://www.springframework.org/schema/mvc         
             http://www.springframework.org/schema/mvc/spring-mvc.xsd 
             http://www.springframework.org/schema/util     
-            http://www.springframework.org/schema/util/spring-util.xsd">
+            http://www.springframework.org/schema/util/spring-util.xsd
+            http://www.springframework.org/schema/tx 
+			http://www.springframework.org/schema/tx/spring-tx.xsd">
 
 	<context:component-scan base-package="com.epam.testapp" />
 
@@ -32,6 +35,42 @@
 		<property value="resources/messages" name="basenames" />
 
 	</bean>
+	
+	<!-- Define Database DataSource / connection pool -->
+	<bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+          destroy-method="close">
+        <property name="driverClass" value="com.mysql.jdbc.Driver" />
+        <property name="jdbcUrl" value="jdbc:mysql://127.0.0.1:2016/newsdb?useSSL=false" />
+        <property name="user" value="root" />
+        <property name="password" value="" /> 
+
+        <!-- these are connection pool properties for C3P0 -->
+        <property name="minPoolSize" value="5" />
+        <property name="maxPoolSize" value="20" />
+        <property name="maxIdleTime" value="30000" />
+	</bean>  
+	
+	<!-- Setup Hibernate session factory -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="myDataSource" />
+		<property name="packagesToScan" value="com.epam.testapp.model" />
+		<property name="hibernateProperties">
+		   <props>
+		      <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+		      <prop key="hibernate.show_sql">true</prop>
+		   </props>
+		</property>
+   </bean>	  
+
+    <!-- Setup Hibernate transaction manager -->
+	<bean id="myTransactionManager"
+            class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    
+    <!-- Enable configuration of transactional behavior based on annotations -->
+	<tx:annotation-driven transaction-manager="myTransactionManager" />
 
 </beans>
 

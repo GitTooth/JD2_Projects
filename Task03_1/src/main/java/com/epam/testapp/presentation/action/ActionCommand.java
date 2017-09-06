@@ -2,15 +2,10 @@ package com.epam.testapp.presentation.action;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import javax.validation.Valid;
-
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,11 +16,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.epam.testapp.model.News;
-import com.epam.testapp.presentation.form.ProcessCommand;
+import com.epam.testapp.util.NewsService;
 
 @Controller
 @RequestMapping("/News")
 public class ActionCommand {
+	
+	@Autowired
+	private NewsService newsService;
 	
 	 @InitBinder
 	 public final void initBinderUsuariosFormValidator(final WebDataBinder binder, final Locale locale) {
@@ -35,49 +33,22 @@ public class ActionCommand {
 
 	@RequestMapping("/update")
 	public String updateNews(@Valid @ModelAttribute("news") News news, BindingResult theBindingResult, Model theModel) {
+						
+	    newsService.save(news);
 		
-		System.out.println(news.getId() + " " + news.getTitle() + " " + news.getDate() + " " + news.getBrief() + " " + news.getContent());
-		
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml")
-				.addAnnotatedClass(News.class).buildSessionFactory();
-		
-		Session session = factory.getCurrentSession();
-		
-		try {						    
-		    session.beginTransaction();
-		    if(news.getId() == 0) {
-		    	session.save(news);
-		    }else {
-		    	session.update(news);
-		    }
-			session.getTransaction().commit();
-		} finally {
-			factory.close();
-		}
-		ProcessCommand.showPage(news, theBindingResult, theModel);
-		
-		return "newsList";
+		return "redirect:/News/NewsListForm";
 	}
 	
 	@RequestMapping("/delete")
 	public String deleteNews(@Valid @ModelAttribute("news") News news, BindingResult theBindingResult, Model theModel) {
 		
-		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml")
-				.addAnnotatedClass(News.class).buildSessionFactory();
+		newsService.remove(news.getId());
 		
-		Session session = factory.getCurrentSession();
-		
-		try {						    
-		    session.beginTransaction();
-			session.delete(news);
-			session.getTransaction().commit();
-			
-		} finally {
-			factory.close();
-		}
-		
-		ProcessCommand.showPage(news, theBindingResult, theModel);
-		
-		return "newsList";
+		return "redirect:/News/NewsListForm";
+	}
+	
+	@RequestMapping("/cancel")
+	public String cancel() {		
+		return "redirect:/News/NewsListForm";
 	}
 }
