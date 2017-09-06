@@ -30,8 +30,14 @@
   		  </div>
   		  <div>
 	  		  <div class = "bottomright">
-	  		  		<button>EDIT</button>
-	  		  		<button>DELETE</button>
+	  		  <form:form action = "showNews" modelAttribute = "news">
+  		  			<form:hidden path="id" value="${news.id}"/>
+	  		  			<button>EDIT</button>
+  			  </form:form>
+  			  <form:form action = "delete" modelAttribute = "news">
+  		  			<form:hidden path="id" value="${news.id}"/>
+	  		  			<button>DELETE</button>
+	  		  </form:form>
 	  		  </div>
 		  </div>
 		  <br/>

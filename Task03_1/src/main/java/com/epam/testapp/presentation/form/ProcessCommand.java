@@ -21,7 +21,7 @@ import com.epam.testapp.model.News;
 public class ProcessCommand {
 	
 	@RequestMapping("/NewsListForm")
-	public String showPage(@Valid @ModelAttribute("news") News news, BindingResult theBindingResult, Model theModel) {
+	public static String showPage(@Valid @ModelAttribute("news") News news, BindingResult theBindingResult, Model theModel) {
 		
 		SessionFactory factory = new Configuration().configure("hibernate.cfg.xml")
 				.addAnnotatedClass(News.class).buildSessionFactory();
@@ -73,6 +73,7 @@ public class ProcessCommand {
 	@RequestMapping("/addNewsForm")
 	public String addNews(@Valid @ModelAttribute("news") News news, BindingResult theBindingResult, Model theModel) {
 			
+		System.out.println(news.getId());
 		
 		if(news.getId() != 0) {
 			SessionFactory factory = new Configuration().configure("hibernate.cfg.xml")

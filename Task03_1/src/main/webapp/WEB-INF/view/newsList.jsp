@@ -11,7 +11,7 @@
 		  <br/>
 		  <br/>
 		  <div class = "righttop"  style = "text-decoration:underline">
-		  		<c:out value="${news.date.getDay()}/${news.date.getMonth()}/${news.date.getYear()}"/>
+		  		<c:out value="${news.date}"/>
 		  </div>
 		  <div class = "leftform">
 		  		<textarea readonly rows="5" cols = "60" name="TxtA001" maxlength="500"><c:out value="${news.brief}"/></textarea>
