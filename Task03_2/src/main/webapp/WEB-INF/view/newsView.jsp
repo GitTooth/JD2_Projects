@@ -1,27 +1,29 @@
 <%@ include file="include/begin-html.jsp" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-    News View
+    <spring:message code="Lbl.NewsView"/>
     </div>
     <br/>
     <br/>
 <c:set var = "news" value = "${news}"/>
 	<div class = "leftform">
-		  		News Title
+		  		<label for ="Title"><spring:message code="Lbl.Title"/></label>
 		  		<c:out value = "${news.title}"/>
 		  </div>
 		  <br/>
 		  <br/>
 		  <div class = "leftform">
-		  		News Date
+		  		<label for ="Date"><spring:message code="Lbl.Title"/></label>
 		  		<c:out value="${news.getDateString()}"/>
 		  </div>
 		  <br/>
 		  <br/>
 		  <div class = "leftform">
-		  		<label for = "Brief">Brief&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-		  		<textarea rows="5" cols = "60" name="TxtA001" maxlength="500"><c:out value = "${news.brief}"/></textarea>
+		  		<label for = "Brief"><spring:message code="Lbl.Brief"/>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+		  		<textarea class="areaBorderless" readonly 
+		  			rows="5" cols = "60" name="TxtA001" maxlength="500"><c:out value = "${news.brief}"/></textarea>
   		  </div>
 		  <br/>
 		  <br/>
@@ -30,18 +32,18 @@
 		  <br/>
 		  <br/>
 		  <div class = "leftform">
-		  		<label for = "Content">Content&nbsp&nbsp&nbsp&nbsp&nbsp</label>
-		  		<textarea rows="10" cols = "60" name="TxtA002" maxlength="2048"><c:out value = "${news.content}"/></textarea>
+		  		<label for = "Content"><spring:message code="Lbl.Content"/>&nbsp&nbsp&nbsp&nbsp&nbsp</label>
+		  		<textarea class="areaBorderless" readonly 
+		  			rows="10" cols = "60" name="TxtA002" maxlength="2048"><c:out value = "${news.content}"/></textarea>
   		  </div>
   		  <div>
 	  		  <div class = "bottomright">
-	  		  <form:form action = "addNewsForm" modelAttribute = "news">
-  		  			<form:hidden path="id" value="${news.id}"/>
-	  		  			<button>EDIT</button>
+	  		  <form:form action = "http://localhost:8080/Task03_3/News/addNewsForm/${news.id}">
+	  		  			<button><spring:message code="Lbl.EDIT"/></button>
   			  </form:form>
-  			  <form:form action = "delete" modelAttribute = "news">
+  			  <form:form action = "http://localhost:8080/Task03_3/News/delete" modelAttribute = "news">
   		  			<form:hidden path="id" value="${news.id}"/>
-	  		  			<button>DELETE</button>
+	  		  			<button><spring:message code="Lbl.DELETE"/></button>
 	  		  </form:form>
 	  		  </div>
 		  </div>

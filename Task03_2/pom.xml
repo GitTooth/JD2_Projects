@@ -2,10 +2,10 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.epam.testapp</groupId>
-  <artifactId>Task03_2</artifactId>
+  <artifactId>Task03_3</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>Task03_2 Maven Webapp</name>
+  <name>Task03_3 Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>
     <dependency>
@@ -76,7 +76,7 @@
 		</dependency>
 	</dependencies>
 	<build>
-		<finalName>Task03_2</finalName>
+		<finalName>Task03_3</finalName>
 
 		<plugins>
 			<plugin>

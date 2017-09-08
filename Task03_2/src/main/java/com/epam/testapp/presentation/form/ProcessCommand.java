@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -28,22 +29,19 @@ public class ProcessCommand {
 		return "newsList";
 	}
 	
-	@RequestMapping("/showNews")
-	public String show(@RequestParam("getId") int getId, Model theModel) {
+	@RequestMapping("/showNews/{id}")
+	public String show(@PathVariable("id") int id, Model theModel) {
 			
-		
-		
-		theModel.addAttribute("news", newsService.fetchById(getId));
+		theModel.addAttribute("news", newsService.fetchById(id));
 		
 		return "newsView";
 	}
 	
-	@RequestMapping("/addNewsForm")
-	public String addNews(@RequestParam("getId") int getId, Model theModel) {
-			
-		System.out.println(getId);	
-		if(getId != 0) {					
-			theModel.addAttribute("news", newsService.fetchById(getId));	
+	@RequestMapping("/addNewsForm/{id}")
+	public String addNews(@PathVariable("id") int id, Model theModel) {
+	
+		if(id != 0) {					
+			theModel.addAttribute("news", newsService.fetchById(id));	
 		}else {
 			theModel.addAttribute("news", new News());
 		}

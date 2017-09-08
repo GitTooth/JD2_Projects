@@ -2,7 +2,6 @@ package com.epam.testapp.presentation.action;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 import javax.validation.Valid;
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.epam.testapp.model.News;
-import com.epam.testapp.model.NewsList;
 import com.epam.testapp.util.NewsService;
 
 @Controller
@@ -39,7 +37,7 @@ public class ActionCommand {
 						
 	    newsService.save(news);
 		
-		return "redirect:/News/NewsListForm";
+		return "redirect:/News/showNews/"+news.getId();
 	}
 	
 	@RequestMapping("/delete")
@@ -54,7 +52,6 @@ public class ActionCommand {
 	public String deleteNewsList(@RequestParam("Btn002") int[] checkedIds, Model theModel) {
 		
 		for(int i = 0; i < checkedIds.length; i++) {
-			System.out.println("removing: " + checkedIds[i]);
 			newsService.remove(checkedIds[i]);
 		}
 				

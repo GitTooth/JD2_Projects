@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html lang="en">
 	<title>Main page</title>
 	<style>
@@ -26,6 +27,15 @@
 		    border-style: solid;
 		    border-style: none solid solid solid;
 		    border-width: 2px;
+		}
+		
+		.footer {
+			   position:fixed;
+			   left:0px;
+			   bottom:0px;
+			   height:30px;
+			   width:100%;
+			   background:#999;
 		}
 		
 		.explorer {
@@ -124,33 +134,41 @@
 		    text-decoration:none;
 		}
 		
-		textarea { vertical-align: top; }
+		.areaBorderless{
+			vertical-align: top; 
+			border: none;	
+			overflow:auto;
+		}
+		
+		textarea { 
+			vertical-align: top;
+		}
 		
 	</style>
 
 	<div class = "containerTop">
 		<div class = "leftcenter">
-			<h2>News management</h2>
+			<h2><spring:message code="Lbl.Management"/></h2>
 		</div>
            <br/>
            <br/>
            <br/>
            <br/>
 		<div class="bottomright">
-          <a class="nav-link" href="#">English</a>
-          <a class="nav-link" href="#">Russian</a>
+          <a class="nav-link" href="?lang=en"><spring:message code="Lbl.English"/></a>
+          <a class="nav-link" href="?lang=ru"><spring:message code="Lbl.Russian"/></a>
 		</div>
 	</div>
 	<div class = "container">
       <div class = "explorer">
         <div class = "explorerTitle">
-          News
+          <spring:message code="Lbl.News"/>
         </div>
         <div class = "explorerList">
           <br/>
-          <a class="nav-link" href="NewsListForm">News List</a>
+          <a class="nav-link" href="http://localhost:8080/Task03_3/News/NewsListForm"><spring:message code="Lbl.NewsList"/></a>
           <br/>
-          <a class="nav-link" href="addNewsForm?getId=0">Add News</a>
+          <a class="nav-link" href="http://localhost:8080/Task03_3/News/addNewsForm/0"><spring:message code="Lbl.AddNews"/></a>
           <h3/>
         </div>
         <br/>
@@ -163,7 +181,7 @@
       </div>
       <div class = "newsContainer">
       	<div class = "lefttop">
-        	<a class="nav-link" href="#">News</a>
+        	<a class="nav-link" href="#"><spring:message code="Lbl.News"/></a>
             >>
         
 	      

@@ -13,10 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "news")
@@ -29,21 +26,22 @@ public class News {
 
 	@Column(name = "title")
 	@NotNull(message="is required")
-	@Size(min=1, message="is required")
+	@Size(min=1, max=100, message="is required")
 	private String title;
 	
 	@Column(name = "date")
+	@NotNull(message="is required")
 	@Temporal(TemporalType.DATE)
 	private Date date;
 	
 	@Column(name = "brief")
 	@NotNull(message="is required")
-	@Size(min=1, message="is required")
+	@Size(min=1, max=500, message="is required")
 	private String brief;
 	
 	@Column(name = "content")
 	@NotNull(message="is required")
-	@Size(min=1, message="is required")
+	@Size(min=1, max=2048, message="is required")
 	private String content;
 	
 	@Transient

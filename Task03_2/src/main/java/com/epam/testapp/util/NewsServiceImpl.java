@@ -21,7 +21,7 @@ public class NewsServiceImpl implements NewsService{
 	@Transactional
 	public void save(News theNews) {
 		
-		System.out.println(theNews.getId() + " " + theNews.getTitle() + " " + theNews.getDate() + " " + theNews.getBrief() + " " + theNews.getContent());
+		System.out.println("Saving: " + theNews.getId() + " " + theNews.getTitle() + " " + theNews.getDate() + " " + theNews.getBrief() + " " + theNews.getContent());
 		
 		newsDAO.save(theNews);
 	}
@@ -29,11 +29,15 @@ public class NewsServiceImpl implements NewsService{
 	@Transactional
 	public News fetchById(int theId) {
 		
+		System.out.println("Getting by id: " + theId);
+		
 		return newsDAO.fetchById(theId);
 	}
 
 	@Transactional
 	public void remove(int theId) {
+		
+		System.out.println("Removing: " + theId);
 		
 		newsDAO.remove(theId);
 	}

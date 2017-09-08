@@ -1,0 +1,15 @@
+Lbl.Management=Управление новостями
+Lbl.OneNews=Новость
+Lbl.NewsList=Список новостей
+Lbl.Save=Сохранить
+Lbl.Edit=редактировать
+Lbl.View=просмотр
+Lbl.Delete=УДАЛИТЬ
+Lbl.Cancel=Отменить
+Lbl.AddNews=Добавить новость
+Lbl.Title=Название
+Lbl.Date=Дата
+Lbl.Brief=Краткое содержание
+Lbl.Content=Содержание
+Lbl.Russian=Русский
+Lbl.English=Английский
