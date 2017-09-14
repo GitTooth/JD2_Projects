@@ -1,0 +1,26 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>web</artifactId>
+  <packaging>war</packaging>
+  <name>web Maven Webapp</name>
+  <url>http://maven.apache.org</url>
+  
+  <parent>
+  		<groupId>com.epam.testapp</groupId>
+  		<artifactId>parent</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  		<relativePath>../parent/pom.xml</relativePath>
+  </parent>
+  
+  <dependencies>
+    <dependency>
+        <groupId>com.epam.testapp.service</groupId>
+  		<artifactId>service</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+  <build>
+    <finalName>web</finalName>
+  </build>
+</project>

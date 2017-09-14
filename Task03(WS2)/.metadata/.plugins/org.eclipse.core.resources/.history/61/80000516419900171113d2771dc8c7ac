@@ -1,0 +1,7 @@
+import com.epam.testapp.service.test;
+
+public class testweb {
+	void out() {
+		System.out.print(test.message);
+	}
+}

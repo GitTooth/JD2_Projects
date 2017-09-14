@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.epam.testapp.service.test"/>
+<fullyQualifiedTypeName name="com.epam.testapp.model.News"/>
+<fullyQualifiedTypeName name="com.epam.testapp.dao.NewsDAO"/>
+</qualifiedTypeNameHistroy>

@@ -1,0 +1,11 @@
+INDEX VERSION 1.130+D:\обр\JD2\Task03(WS2)\.metadata\.plugins\org.eclipse.jdt.core
+383769393.index
+2559596266.index
+1319774933.index
+1589575115.index
+3069457495.index
+458914892.index
+2170421059.index
+4116028753.index
+3678006507.index
+1243057733.index
