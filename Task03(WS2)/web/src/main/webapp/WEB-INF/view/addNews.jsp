@@ -9,7 +9,7 @@
     <br/>
 	    
 <c:set var = "news" value = "${news}"/>
-	<form:form action = "http://localhost:8080/Task03_3/News/update" modelAttribute = "news">
+	<form:form action = "http://localhost:8080/web/${localeCode}/update" modelAttribute = "news">
 		<form:hidden path="id" value="${news.id}"/>
 		  <div class = "leftform">
 		  		<spring:message code="Lbl.Title"/>
@@ -52,7 +52,7 @@
 	  		  </div>
  		  </div>
 	  </form:form>
-	  <form:form action = "http://localhost:8080/web/News/NewsListForm">
+	  <form:form action = "http://localhost:8080/web/${localeCode}/NewsListForm">
 	  	  <div style = "position: absolute; bottom: 10%;right: 45%;">
 	  		<button><spring:message code="Lbl.CANCEL"/></button>	 
   		  </div> 

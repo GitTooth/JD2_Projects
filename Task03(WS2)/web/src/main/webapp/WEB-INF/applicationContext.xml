@@ -77,7 +77,7 @@
     <!-- Enable configuration of transactional behavior based on annotations -->
 	<tx:annotation-driven transaction-manager="myTransactionManager" />
 	
-	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
     	<property name="defaultLocale" value="en" />
 	</bean>
 	

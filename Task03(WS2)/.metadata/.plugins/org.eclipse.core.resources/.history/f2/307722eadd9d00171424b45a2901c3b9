@@ -1,0 +1,23 @@
+package com.epam.testapp.service;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Component;
+
+import com.epam.testapp.model.Messages;
+
+@Aspect
+@Component
+public class MessageAspect {
+
+	@Pointcut("execution(* com.epam.testapp.form.ProcessCommand.showPage(..))")
+	private void cleanMessage() {}
+	
+	@AfterReturning(pointcut = "cleanMessage()", returning = "result")
+	public void afterReturning(JoinPoint theJoinPoint, Object result) {
+		Messages.message = "";
+		Messages.result = "";
+	}	
+}

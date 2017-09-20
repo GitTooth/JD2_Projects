@@ -38,10 +38,10 @@
   		  </div>
   		  <div>
 	  		  <div class = "bottomright">
-	  		  <form:form action = "http://localhost:8080/web/News/addNewsForm/${news.id}">
+	  		  <form:form action = "http://localhost:8080/web/${localeCode}/addNewsForm/${news.id}">
 	  		  			<button><spring:message code="Lbl.EDIT"/></button>
   			  </form:form>
-  			  <form:form action = "http://localhost:8080/web/News/delete" modelAttribute = "news">
+  			  <form:form action = "http://localhost:8080/web/${localeCode}/delete" modelAttribute = "news">
   		  			<form:hidden path="id" value="${news.id}"/>
 	  		  			<button><spring:message code="Lbl.DELETE"/></button>
 	  		  </form:form>

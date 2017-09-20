@@ -1,8 +1,11 @@
 package com.epam.testapp.form;
 
+import java.util.Locale;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,7 +19,7 @@ import com.epam.testapp.service.NewsService;
 import com.epam.testapp.model.Messages;
 
 @Controller
-@RequestMapping("/News")
+@RequestMapping("/{locale}")
 public class ProcessCommand {
 	
 	@Autowired
@@ -24,9 +27,9 @@ public class ProcessCommand {
 	
 	@RequestMapping("/NewsListForm")
 	public String showPage(@Valid @ModelAttribute("news") News news, BindingResult theBindingResult, Model theModel) {
-		
-		Messages.message = "";
-		Messages.result = "";
+				
+//		Messages.message = "========================================================CURRENT LOCALE " + LocaleContextHolder.getLocale();
+//		Messages.result = "success";
 		
 		theModel.addAttribute("newsList", newsService.getList());
 		
@@ -35,7 +38,7 @@ public class ProcessCommand {
 	
 	@RequestMapping("/NewsListForm/{id}")
 	public String show(@PathVariable("id") int id, Model theModel) {
-			
+		
 		theModel.addAttribute("news", newsService.fetchById(id));
 		
 		return "newsView";
@@ -43,7 +46,7 @@ public class ProcessCommand {
 	
 	@RequestMapping("/addNewsForm/{id}")
 	public String addNews(@PathVariable("id") int id, Model theModel) {
-	
+		
 		if(id != 0) {					
 			theModel.addAttribute("news", newsService.fetchById(id));	
 		}else {

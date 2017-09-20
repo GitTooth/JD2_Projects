@@ -1,0 +1,46 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<html lang="en">
+	<title>Main page</title>
+	<link rel="stylesheet" type="text/css" href="/web/src/main/resources/css/style.css">
+	
+	<div class = "containerTop">
+		<div class = "leftcenter">
+			<h2><spring:message code="Lbl.Management"/></h2>
+		</div>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+		<div class="bottomright">
+          <a class="nav-link" href="?lang=en"><spring:message code="Lbl.English"/></a>
+          <a class="nav-link" href="?lang=ru"><spring:message code="Lbl.Russian"/></a>
+		</div>
+	</div>
+	<div class = "container">
+      <div class = "explorer">
+        <div class = "explorerTitle">
+          <spring:message code="Lbl.News"/>
+        </div>
+        <div class = "explorerList">
+          <br/>
+          <a class="nav-link" href="http://localhost:8080/web/News/NewsListForm"><spring:message code="Lbl.NewsList"/></a>
+          <br/>
+          <a class="nav-link" href="http://localhost:8080/web/News/addNewsForm/0"><spring:message code="Lbl.AddNews"/></a>
+          <h3/>
+        </div>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+
+      </div>
+      <div class = "newsContainer">
+      	<div class = "lefttop">
+        	<a class="nav-link" href="#"><spring:message code="Lbl.News"/></a>
+            >>
+        
+	      

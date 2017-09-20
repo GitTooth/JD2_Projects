@@ -7,12 +7,14 @@ import java.util.Locale;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -21,7 +23,7 @@ import com.epam.testapp.service.NewsService;
 import com.epam.testapp.model.Messages;
 
 @Controller
-@RequestMapping("/News")
+@RequestMapping("/{locale}")
 public class ActionCommand {
 	
 	@Autowired
@@ -42,7 +44,7 @@ public class ActionCommand {
 		
 	    newsService.save(news);
 		
-		return "redirect:/News/NewsListForm/"+news.getId();
+		return "redirect:/"+LocaleContextHolder.getLocale()+"/NewsListForm/"+news.getId();
 	}
 	
 	@RequestMapping("/delete")
@@ -50,7 +52,7 @@ public class ActionCommand {
 		
 		newsService.remove(news.getId());
 		
-		return "redirect:/News/NewsListForm";
+		return "redirect:/"+LocaleContextHolder.getLocale()+"/NewsListForm";
 	}
 	
 	@RequestMapping("/deleteList")
@@ -59,19 +61,19 @@ public class ActionCommand {
 		for(int i = 0; i < checkedIds.length; i++) {
 			newsService.remove(checkedIds[i]);
 		}
-//		if(checkedIds.length == 1) {
-//			Messages.message = "E04:No checkbox selected";
-//			Messages.result = "error";
-//		}else {
-//			Messages.message = "Selected news deleted";
-//			Messages.result = "success";
-//		}
-//				
-		return "redirect:/News/NewsListForm";
+		if(checkedIds.length == 1) {
+			Messages.message = "E04:No checkbox selected";
+			Messages.result = "error";
+		}else {
+			Messages.message = "Selected news deleted";
+			Messages.result = "success";
+		}
+				
+		return "redirect:/"+LocaleContextHolder.getLocale()+"/NewsListForm";
 	}
 	
 	@RequestMapping("/cancel")
 	public String cancel() {		
-		return "redirect:/News/NewsListForm";
+		return "redirect:/"+LocaleContextHolder.getLocale()+"/NewsListForm";
 	}
 }
