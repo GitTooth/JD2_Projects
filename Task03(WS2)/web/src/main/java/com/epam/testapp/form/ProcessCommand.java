@@ -1,22 +1,17 @@
 package com.epam.testapp.form;
 
-import java.util.Locale;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.epam.testapp.model.News;
 import com.epam.testapp.service.NewsService;
-import com.epam.testapp.model.Messages;
 
 @Controller
 @RequestMapping("/{locale}")

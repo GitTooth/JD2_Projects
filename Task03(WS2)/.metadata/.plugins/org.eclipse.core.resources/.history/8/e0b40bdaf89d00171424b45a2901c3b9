@@ -1,0 +1,22 @@
+package com.epam.testapp.service;
+
+import org.apache.log4j.Logger;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
+
+import com.epam.testapp.model.Messages;
+
+@Aspect
+@Component
+public class MessageAspect {
+
+	private static final Logger logger = Logger.getLogger(LoggingAspect.class);
+	
+	@After("com.epam.testapp.form.ProcessCommand.showPage(..)")
+	private void cleanMessage() {
+		logger.info("============================================================================================================");
+		Messages.message = "";
+		Messages.result = "";
+	}
+}

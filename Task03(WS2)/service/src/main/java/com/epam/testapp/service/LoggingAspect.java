@@ -1,11 +1,11 @@
 package com.epam.testapp.service;
 
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
+
 import org.apache.log4j.Logger;
 
 @Aspect
@@ -35,16 +35,4 @@ public class LoggingAspect{
 			logger.info("====> args: " + temp);
 		}
 	}
-	
-	@AfterReturning(pointcut = "forAppFlow()", returning = "result")
-	public void afterReturning(JoinPoint theJoinPoint, Object result) {
-		String method = theJoinPoint.getSignature().toShortString();
-		logger.info("====> calling method: " + method);
-		
-		Object[] args = theJoinPoint.getArgs();
-		
-		for(Object temp:args) {
-			logger.info("====> args: " + temp);
-		}
-	}	
 }

@@ -1,0 +1,3 @@
+com\epam\testapp\form\ProcessCommand.class
+com\epam\testapp\action\ActionCommand.class
+com\epam\testapp\form\IndexPageCommand.class

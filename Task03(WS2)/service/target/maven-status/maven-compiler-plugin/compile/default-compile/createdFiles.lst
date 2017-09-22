@@ -1,1 +1,4 @@
+com\epam\testapp\service\LoggingAspect.class
+com\epam\testapp\service\NewsService.class
+com\epam\testapp\service\NewsServiceImpl.class
 com\epam\testapp\service\MessageAspect.class
