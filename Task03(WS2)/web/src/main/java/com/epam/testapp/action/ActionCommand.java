@@ -14,7 +14,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -36,7 +35,7 @@ public class ActionCommand {
 	 }
 
 	@RequestMapping("/update")
-	public String updateNews(@Valid @ModelAttribute("news") News news, BindingResult theBindingResult, Model theModel) {
+	public String updateNews(@Valid @ModelAttribute("news") News news, BindingResult theBindingResult) {
 						
 		if(theBindingResult.hasErrors()) {
 			return "addNews";
@@ -48,7 +47,7 @@ public class ActionCommand {
 	}
 	
 	@RequestMapping("/delete")
-	public String deleteNews(@Valid @ModelAttribute("news") News news, BindingResult theBindingResult, Model theModel) {
+	public String deleteNews(@ModelAttribute("news") News news) {
 		
 		newsService.remove(news.getId());
 		

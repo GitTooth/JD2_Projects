@@ -28,11 +28,5 @@ public class LoggingAspect{
 		
 		String method = theJoinPoint.getSignature().toShortString();
 		logger.info("====> calling method: " + method);
-		
-		Object[] args = theJoinPoint.getArgs();
-		
-		for(Object temp:args) {
-			logger.info("====> args: " + temp);
-		}
 	}
 }

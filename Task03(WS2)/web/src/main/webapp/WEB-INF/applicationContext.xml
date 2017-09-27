@@ -40,7 +40,7 @@
 		<property value="messages" name="basenames" />
 
 	</bean>
-	
+		
 	<!-- Define Database DataSource / connection pool -->
 	<bean id="myDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
           destroy-method="close">

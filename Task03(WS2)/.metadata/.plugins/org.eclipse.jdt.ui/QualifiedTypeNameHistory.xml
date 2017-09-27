@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="com.epam.testapp.service.test"/>
-<fullyQualifiedTypeName name="com.epam.testapp.model.News"/>
-<fullyQualifiedTypeName name="com.epam.testapp.dao.NewsDAO"/>
 <fullyQualifiedTypeName name="org.springframework.context.i18n.LocaleContextHolder"/>
 <fullyQualifiedTypeName name="java.util.Locale"/>
 <fullyQualifiedTypeName name="com.epam.testapp.model.Messages"/>
@@ -11,4 +9,8 @@
 <fullyQualifiedTypeName name="org.aspectj.lang.annotation.Pointcut"/>
 <fullyQualifiedTypeName name="org.aspectj.lang.annotation.Before"/>
 <fullyQualifiedTypeName name="org.aspectj.lang.annotation.AfterReturning"/>
+<fullyQualifiedTypeName name="org.springframework.orm.hibernate5.LocalSessionFactoryBean"/>
+<fullyQualifiedTypeName name="com.epam.testapp.model.News"/>
+<fullyQualifiedTypeName name="com.epam.testapp.dao.NewsDAO"/>
+<fullyQualifiedTypeName name="org.springframework.context.support.ClassPathXmlApplicationContext"/>
 </qualifiedTypeNameHistroy>
